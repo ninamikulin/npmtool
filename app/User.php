@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Project;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,4 +37,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // checks if admin
+    public function isAdmin()
+    {
+        if ($this->id == 1)
+        {
+            return true;
+        }
+    }
+
+    //-------------------------------------
+    // RELATIONSHIPS
+    //-------------------------------------
+
+    // hasMany projects
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
