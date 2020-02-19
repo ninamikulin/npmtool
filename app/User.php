@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Project;
+use App\Task;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,9 +52,15 @@ class User extends Authenticatable
     // RELATIONSHIPS
     //-------------------------------------
 
-    // hasMany projects
+    // has many Projects
     public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    //belongs to many Tasks
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class)->withTimestamps();
     }
 }

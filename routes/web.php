@@ -11,11 +11,22 @@
 |
 */
 
+// auth
+Auth::routes();
+
+// projects
+Route::resource('projects', 'ProjectController');
+
+// home
+Route::get('/home', 'HomeController@index')->name('home');
+
+// tasks
+Route::patch('tasks/{task}', 'ProjectTasksController@update');
+Route::delete('tasks/{task}', 'ProjectTasksController@destroy');
+Route::post('tasks/{task}/assign', 'UsersTasksController@store');
+Route::delete('tasks/{task}/assign/{user}/delete', 'UsersTasksController@destroy');
+Route::post('projects/{project}/tasks', 'ProjectTasksController@store');
+
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::resource('projects', 'ProjectController');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

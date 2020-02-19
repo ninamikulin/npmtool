@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="text-center">
     <div>
         <h1 class="mt-5 mb-3 p-3"><strong>Update Project</strong>
         </h1>
     </div>
-
-<div >
+<div>
     <form  method="POST" action="/projects/{{$project->id}}">
         @csrf
         @method('PATCH')
@@ -18,7 +16,7 @@
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" name="description" class="form-control" value="{{$project->description}}" required>
+            <textarea type="text" name="description" class="form-control" cols="4" rows="6" required>{{$project->description}}</textarea>
         </div>
         <div class="form-group">
             <label for="website">Due date</label>
@@ -28,5 +26,4 @@
         <button type="submit" class="btn btn-primary mt-3">Update</button>
     </form>
 </div>
-
 @endsection

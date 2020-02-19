@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Task;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +16,12 @@ class Project extends Model
 		'created_at'  => 'datetime',
 		'deadline' => 'datetime'];
 
-	
+	// adds a task to the project
+	public function addTask($task)
+    { 	
+    	$this->tasks()->create($task);
+    }
+
 	//-------------------------------------
     // RELATIONSHIPS
     //-------------------------------------
@@ -25,4 +31,12 @@ class Project extends Model
     {
     	return $this->belongsTo(User::class);
     }
+
+    // has many tasks
+    public function tasks()
+    {
+    	return $this->hasMany(Task::class);
+    } 
+
+  
 }

@@ -17,17 +17,9 @@ class ProjectController extends Controller
 
     // returns view with projects
     public function index()
-    {        
-        // if user is admin, return all projects, order by deadline
-        if (auth()->user()->isAdmin()) {
-            $projects = Project::orderBy('deadline','asc');
-        }
-        // if user is not admin, return all projects owned by the user, order by deadline
-        else{
-            $projects = Project::where('user_id', auth()->id())->orderBy('deadline','asc');
-        }
-        //paginate the results
-        $projects = $projects->paginate(10);
+    {    
+
+        $projects = Project::orderBy('deadline','asc')->paginate(10);
 
         return view('projects.index', ['projects'=>$projects]);
     }
@@ -59,12 +51,13 @@ class ProjectController extends Controller
     // shows one project
     public function show(Project $project)
     {
-        return view('projects.show', ['project'=> $project]);
+        return view('projects.show', ['project'=> $project, 'users'=>User::all()]);
     }
 
     // returns view with a form to edit an existing project
     public function edit(Project $project)
     {
+        $this->authorize('edit', $project);
         return view('projects.edit', ['project'=> $project]);
     }
 
@@ -90,6 +83,7 @@ class ProjectController extends Controller
     // deletes from DB
     public function destroy(Project $project)
     {     
+        $this->authorize('edit', $project);
         $project->delete();
 
         // displays flash message 
