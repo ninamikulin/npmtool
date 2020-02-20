@@ -2,10 +2,10 @@
 
 1. [About](#about) 
 2. [Basic Laravel Auth](#basic-laravel-auth) 
-3. [CRUD for Projects](#crud-for-projects)
-	i. [CREATE](#create)
+3. [CRUD for Projects](#crud-for-projects)  
+    i. [CREATE](#create)  
     ii. [READ](#read)  
-    iii. [UPDATE](#update)  
+    iii. [UPDATE](#update)   
     iv. [DELETE](#delete) 
 4. [CRUD for Tasks](#crud-for-tasks)  
 	i. [Create, edit and complete tasks](#create-edit-and-complete-tasks)
@@ -15,7 +15,7 @@
     
 	ii. [Task assignment](#task-assignment) 
     - [Assign tasks to users](#assign-tasks-to-users)
-    - [Unassign tasks to users](#unassign-tasks-to-users)
+    - [Unassign tasks from users](#unassign-tasks-from-users)
 5. [Migrations](#migrations) 
 5. [Eloquent relationships](#eloquent-relationships) 
 6. [Policies](#policies)
