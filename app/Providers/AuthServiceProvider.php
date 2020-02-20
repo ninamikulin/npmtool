@@ -25,8 +25,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // registers policies
         $this->registerPolicies();
 
+        // run the logic in the gate before all other auth checks
         Gate::before(function ($user, $ability) {
             return $user->isAdmin();
         });

@@ -21,6 +21,7 @@ class CreateProjectsTable extends Migration
             $table->datetime('deadline');
             $table->timestamps();
 
+            // foreign key constraint - add user_id key to projects table
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

@@ -15,8 +15,6 @@
 			</div>
 			<div class="row d-flex justify-content-center mt-3" style="vertical-align: bottom;">
 				<strong class="text-danger">Due date: &nbsp</strong>
-			
-		 
 				<form method="POST" action="/projects/{{$project->id}}" style="margin-top: 0px!important;">
 					@csrf
 					@method('PATCH')
@@ -156,7 +154,7 @@
         Are you sure you want to permanently delete this project?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">No, go back.</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal">No, go back.</button>
         <form method="POST" action="/projects/{{$project->id}}">
 	        @method('DELETE')
 	        @csrf

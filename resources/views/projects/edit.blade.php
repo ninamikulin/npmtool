@@ -23,7 +23,7 @@
             <input type="date" name="deadline" class="form-control" value="{{$project->deadline->format('Y-m-d')}}" required>
         </div>
          
-        <button type="submit" class="btn btn-primary mt-3">Update</button>
+        <button type="submit" class="btn btn-success mt-3">Update</button>
     </form>
 </div>
 @endsection

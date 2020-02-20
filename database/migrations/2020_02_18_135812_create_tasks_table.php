@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->boolean('completed')->default(false);
             $table->timestamps();
 
+            //foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade')->onUpdate('cascade');
         });

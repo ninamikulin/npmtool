@@ -10,11 +10,17 @@ class Task extends Model
 {
     protected $guarded= [];
 
+    //-------------------------------------
+    // RELATIONSHIPS
+    //-------------------------------------
+
+    // belongs to one project
     public function project()
     {
     	return $this->belongsTo(Project::class);
     }
 
+   	// belongs to many users
     public function users()
     {
     	return $this->belongsToMany(User::class)->withTimestamps();

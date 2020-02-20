@@ -15,10 +15,13 @@ class ProjectController extends Controller
         $this->middleware('auth');
     }
 
+    //-------------------------------------
+    // CRUD
+    //-------------------------------------
+
     // returns view with projects
     public function index()
     {    
-
         $projects = Project::orderBy('deadline','asc')->paginate(10);
 
         return view('projects.index', ['projects'=>$projects]);
@@ -92,6 +95,10 @@ class ProjectController extends Controller
         return redirect("/projects");
 
     }
+
+    //-------------------------------------
+    // HELPERS
+    //-------------------------------------
 
     // server-side validation
     public function validateProject()
