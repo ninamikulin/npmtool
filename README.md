@@ -3,15 +3,15 @@
 1. [About](#about) 
 2. [Basic Laravel Auth](#basic-laravel-auth) 
 3. [CRUD for Projects](#crud-for-projects)  
-    i. [CREATE](#create)  
-    ii. [READ](#read)  
-    iii. [UPDATE](#update)   
-    iv. [DELETE](#delete) 
+    i. [CREATE project](#create-project)  
+    ii. [READ project](#read-project)  
+    iii. [UPDATE project](#update-project)   
+    iv. [DELETE project](#delete-project) 
 4. [CRUD for Tasks](#crud-for-tasks)  
 	i. [Create, edit and complete tasks](#create-edit-and-complete-tasks)
-    - [CREATE](#create)  
-    - [EDIT and UPDATE](#edit-and-update)  
-    - [DELETE](#delete)  
+    - [CREATE task](#create-task)  
+    - [EDIT and UPDATE task](#edit-and-update-task)  
+    - [DELETE task](#delete-task)  
     
 	ii. [Task assignment](#task-assignment) 
     - [Assign tasks to users](#assign-tasks-to-users)
@@ -38,7 +38,7 @@ Create basic Laravel auth:
 
 ## CRUD for Projects
 
-### Create
+### Create project
 
 To create a new project 2 `ProjectController` methods are used:
 
@@ -74,7 +74,7 @@ public function store()
 ```
 </details>
 
-### Read
+### Read project
 
 <details>
 <summary>view all projects </summary>
@@ -110,7 +110,7 @@ public function show(Project $project)
 ```
 </details>
 
-### Update
+### Update project
 
 To update an existing project 2 `ProjectController` methods are used:
 
@@ -147,7 +147,7 @@ public function update(Project $project)
 ```
 </details>
 
-### Delete
+### Delete project
 
 <details> 
 <summary> destroy-> deletes the record from the DB</summary>
@@ -179,7 +179,7 @@ Two controllers were created to handle the logic of task assignment to projects 
 
 ### Create, edit and complete tasks
 
-#### Create
+#### Create task
 
 <details> 
 <summary>Controller: ProjectTasksController@store </summary> 
@@ -241,7 +241,7 @@ public function addTask($task)
 ```
 </details>
 
-#### Edit and Update
+#### Edit and Update task
 
 <details> 
 <summary>Controller: ProjectTasksController@update </summary>
@@ -313,7 +313,7 @@ public function update(Task $task)
 ```
 </details>
 
-#### Delete
+#### Delete task
 
 <details> 
 <summary>Controller: ProjectTasksController@destroy</summary>
