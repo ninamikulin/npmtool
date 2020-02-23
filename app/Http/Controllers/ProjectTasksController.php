@@ -84,5 +84,4 @@ class ProjectTasksController extends Controller
         return request()->validate([
             'description' => 'required']);
     }
-
 }

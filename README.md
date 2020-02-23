@@ -15,12 +15,10 @@
     
 	ii. [Task assignment](#task-assignment) 
     - [Assign tasks to users](#assign-tasks-to-users)
-<<<<<<< Updated upstream
     - [Unassign tasks from users](#unassign-tasks-from-users)
 5. [Migrations](#migrations) 
 5. [Eloquent relationships](#eloquent-relationships) 
 6. [Policies](#policies)
-=======
     - [Unassign tasks to users](#unassign-tasks-to-users)
 5. [Migrations](#migrations)  
 6. [Creating and assigning tasks](#creating-and-assigning-tasks)  
@@ -29,7 +27,6 @@
 7. [Rich text editor](#rich-text-editor)
 8. [Middleware](#middleware)
 9. [Gates and Policies](#gates-and-policies)
->>>>>>> Stashed changes
    
 ## About 
 PMTool is a simple project management tool made with Laravel 6. 
@@ -296,7 +293,6 @@ public function update(Task $task)
 <!--  /resources/views/projects/show.blade.php-->
 
 @foreach($project->tasks()->orderBy('completed', 'asc')->latest()->get() as $task)
-<<<<<<< Updated upstream
 <tbody>
 <tr style="{{$task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : ''}}">
     <!-- Complete task checkbox -->
@@ -324,7 +320,6 @@ public function update(Task $task)
             </form>
         </div>
     </td>
-=======
    	<tbody>
    		<tr style="{{ $task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : '' }}">
 		<!-- Complete task checkbox -->	
@@ -352,7 +347,6 @@ public function update(Task $task)
     				</form>
     			</div>
     		</td>
->>>>>>> Stashed changes
 ```
 </details>
 
@@ -413,7 +407,6 @@ public function store(Task $task)
     // checks if enrty exists in pivot table (a user can only be assigned to a task once)
     // creates the entry if the record doesn't exist
     try{
-<<<<<<< Updated upstream
         $task->users()->attach($this->validateTask());
 
     } catch (QueryException $errors){
@@ -421,7 +414,6 @@ public function store(Task $task)
        return back()->withErrors('Duplicate entry.');
     }      
     return back();
-=======
       
       $task->users()->attach($this->validateTask());
 
@@ -431,7 +423,6 @@ public function store(Task $task)
     }  
 
 	return back();
->>>>>>> Stashed changes
 }
 ```
 </details>
@@ -754,6 +745,7 @@ class AuthServiceProvider extends ServiceProvider
 	
     // run the logic in the gate before all other auth checks
     Gate::before(function ($user, $ability) {
+      
     return $user->isAdmin();
     });
   }

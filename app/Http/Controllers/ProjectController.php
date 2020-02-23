@@ -81,7 +81,6 @@ class ProjectController extends Controller
         session()->flash('message', 'Your project has been updated.');
 
         return redirect("/projects/{$project->id}");
-
     }
 
     // deletes from DB
@@ -96,7 +95,6 @@ class ProjectController extends Controller
         session()->flash('message', 'Project deleted.');
 
         return redirect("/projects");
-
     }
 
     //-------------------------------------
@@ -112,5 +110,4 @@ class ProjectController extends Controller
             'deadline' => 'required|date:d-m-Y|after:today'
         ]);
     }
-
 }
