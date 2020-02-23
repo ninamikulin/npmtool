@@ -24,7 +24,7 @@ class ProjectController extends Controller
     {    
         $projects = Project::orderBy('deadline','asc')->paginate(10);
 
-        return view('projects.index', ['projects'=>$projects]);
+        return view('projects.index', ['projects' => $projects]);
     }
 
     // returns view with a form to create a project
@@ -54,21 +54,22 @@ class ProjectController extends Controller
     // shows one project
     public function show(Project $project)
     {
-        return view('projects.show', ['project'=> $project, 'users'=>User::all()]);
+        return view('projects.show', ['project' => $project, 'users' => User::all()]);
     }
 
     // returns view with a form to edit an existing project
     public function edit(Project $project)
     {
         $this->authorize('edit', $project);
-        return view('projects.edit', ['project'=> $project]);
+
+        return view('projects.edit', ['project' => $project]);
     }
 
     // persists the changes to the DB
     public function update(Project $project)
     {
         // server-side validation
-        $validatedProject= $this->validateProject();
+        $validatedProject = $this->validateProject();
 
         // sets additional attributes
         $validateProject['user_id'] = auth()->id();
@@ -87,6 +88,8 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {     
         $this->authorize('edit', $project);
+
+        // deletes from DB
         $project->delete();
 
         // displays flash message 

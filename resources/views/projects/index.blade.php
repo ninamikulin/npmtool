@@ -1,6 +1,4 @@
-
 @extends('layouts.app')
-
 @section('content')
 <div class="text-center">
 	<h1 class="mt-5 mb-5 "><strong>All projects</strong>
@@ -27,13 +25,13 @@
    			<td><strong>{{$project->name}}</strong></td>
    			<td style="text-align:left; width: 400px;">
    				<ul>
-   				@foreach($project->tasks()->orderBy('completed', 'asc')->latest()->get()  as $task)
-   				<li><span class="badge badge-{{$task->completed ? 'success': 'danger'}}" >{{$task->completed ? 'completed': 'to do'}}</span> {{$task->description}} </li> 
+   				@foreach($project->tasks()->orderBy('completed', 'asc')->latest()->get() as $task)
+   				<li><span class="badge badge-{{$task->completed ? 'success': 'danger'}}" >{{ $task->completed ? 'completed': 'to do' }}</span> {{ $task->description }} </li> 
    				@endforeach
    				</ul>
    			</td>
-		    <td>{{$project->deadline->format('d-m-Y')}}</td>
-		    <td>{{$project->user->name}}</td>
+		    <td>{{ $project->deadline->format('d-m-Y') }}</td>
+		    <td>{{ $project->user->name }}</td>
 		    <td><a href="{{route('projects.show', ['project'=> $project])}}">More...</a></td>
 		    <td></td>
 	    </tr>

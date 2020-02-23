@@ -31,11 +31,6 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -71,7 +66,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
@@ -79,7 +73,7 @@
                         @if($errors->any())
                         <div class="alert alert-danger" role="alert">
                             @foreach($errors->all() as $error)
-                                {{$error}}
+                                {{ $error }}
                             @endforeach
                         </div>
                     @endif
@@ -87,7 +81,6 @@
                         <div class="alert alert-success" role="alert">{{ session('message') }}</div>
                     @endif
                     @yield('content')
-
                     </div>
                 </div>
             </div>

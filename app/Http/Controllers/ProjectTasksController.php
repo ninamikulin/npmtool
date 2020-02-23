@@ -30,7 +30,7 @@ class ProjectTasksController extends Controller
             $attributes = $this->validateTask();
             $description = $attributes['description'];
         }else{
-            $description =  $task->description;
+            $description = $task->description;
         }
 
         // updates the task
@@ -38,8 +38,9 @@ class ProjectTasksController extends Controller
             //checks if completed attribute in request (if task has been completed)
     		'completed' => request()->has('completed'),
             //setting the description attribute
-            'description'=> $description
+            'description' => $description
     	]);
+        
     	return back();
     }
 

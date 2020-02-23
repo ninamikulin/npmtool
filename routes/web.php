@@ -27,6 +27,7 @@ Route::post('tasks/{task}/assign', 'UsersTasksController@store');
 Route::delete('tasks/{task}/assign/{user}/delete', 'UsersTasksController@destroy');
 Route::post('projects/{project}/tasks', 'ProjectTasksController@store');
 
+// welcome view
 Route::get('/', function () {
     return view('welcome');
 });

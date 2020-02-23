@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class UsersTasksController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,12 +24,14 @@ class UsersTasksController extends Controller
         // checks if enrty exists in pivot table (a user can only be assigned to a task once)
         // creates the entry if the record doesn't exist
         try{
+
             $task->users()->attach($this->validateTask());
 
-        } catch (QueryException $errors){
+        } catch (QueryException $errors) {
 
            return back()->withErrors('Duplicate entry.');
         }      
+        
     	return back();
     }
 

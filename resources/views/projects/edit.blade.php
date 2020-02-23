@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="text-center">
     <div>
@@ -7,22 +6,21 @@
         </h1>
     </div>
 <div>
-    <form  method="POST" action="/projects/{{$project->id}}">
+    <form  method="POST" action="/projects/{{ $project->id }}">
         @csrf
         @method('PATCH')
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" value="{{$project->name}}" required>  
+            <input type="text" name="name" class="form-control" value="{{ $project->name }}" required>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea type="text" name="description" class="form-control" cols="4" rows="6" required>{{$project->description}}</textarea>
+            <textarea type="text" name="description" class="form-control" cols="4" rows="6" required>{{ $project->description }}</textarea>
         </div>
         <div class="form-group">
             <label for="website">Due date</label>
-            <input type="date" name="deadline" class="form-control" value="{{$project->deadline->format('Y-m-d')}}" required>
-        </div>
-         
+            <input type="date" name="deadline" class="form-control" value="{{ $project->deadline->format('Y-m-d') }}" required>
+        </div>         
         <button type="submit" class="btn btn-success mt-3">Update</button>
     </form>
 </div>

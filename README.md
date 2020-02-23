@@ -15,10 +15,21 @@
     
 	ii. [Task assignment](#task-assignment) 
     - [Assign tasks to users](#assign-tasks-to-users)
+<<<<<<< Updated upstream
     - [Unassign tasks from users](#unassign-tasks-from-users)
 5. [Migrations](#migrations) 
 5. [Eloquent relationships](#eloquent-relationships) 
 6. [Policies](#policies)
+=======
+    - [Unassign tasks to users](#unassign-tasks-to-users)
+5. [Migrations](#migrations)  
+6. [Creating and assigning tasks](#creating-and-assigning-tasks)  
+	i. [Models](#models)  
+    ii. 
+7. [Rich text editor](#rich-text-editor)
+8. [Middleware](#middleware)
+9. [Gates and Policies](#gates-and-policies)
+>>>>>>> Stashed changes
    
 ## About 
 PMTool is a simple project management tool made with Laravel 6. 
@@ -89,7 +100,7 @@ public function index()
 {    
   $projects = Project::orderBy('deadline','asc')->paginate(10);
 
-  return view('projects.index', ['projects'=>$projects]);
+  return view('projects.index', ['projects' => $projects]);
 }
 ```
 </details>
@@ -104,7 +115,7 @@ public function index()
 // shows one project
 public function show(Project $project)
 {
-  return view('projects.show', ['project'=> $project, 'users'=>User::all()]);
+  return view('projects.show', ['project' => $project, 'users' => User::all()]);
 }
 
 ```
@@ -130,7 +141,7 @@ To update an existing project 2 `ProjectController` methods are used:
 public function update(Project $project)
 {
   // server-side validation
-  $validatedProject= $this->validateProject();
+  $validatedProject = $this->validateProject();
 
   // sets additional attributes
   $validateProject['user_id'] = auth()->id();
@@ -164,7 +175,7 @@ public function update(Project $project)
   // displays flash message 
   session()->flash('message', 'Project deleted.');
 
-  return redirect("/projects");
+  return redirect('/projects');
 
 }
 ```
@@ -229,8 +240,8 @@ public function addTask($task)
 <!--  /resources/views/projects/show.blade.php-->
 
 <!-- Create task -->
-<form method="POST" action="/projects/{{$project->id}}/tasks">
-	@csrf
+<form method="POST" action="/projects/{{ $project->id }}/tasks">
+@csrf
 	<div class="form-group">
 		<input class="form-control" type="text" name="description" placeholder="Describe the task..." required>
 	</div>
@@ -261,7 +272,8 @@ public function update(Task $task)
   if (request()->description) {
   	$attributes = $this->validateTask();
   	$description = $attributes['description'];
-  }else{
+
+  } else {
   	$description =  $task->description;
   }
   
@@ -270,8 +282,9 @@ public function update(Task $task)
   //checks if completed attribute in request (if task has been completed)
   'completed' => request()->has('completed'),
   //setting the description attribute
-  'description'=> $description
+  'description' => $description
   ]);
+
   return back();
 }
 ```
@@ -283,6 +296,7 @@ public function update(Task $task)
 <!--  /resources/views/projects/show.blade.php-->
 
 @foreach($project->tasks()->orderBy('completed', 'asc')->latest()->get() as $task)
+<<<<<<< Updated upstream
 <tbody>
 <tr style="{{$task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : ''}}">
     <!-- Complete task checkbox -->
@@ -310,6 +324,35 @@ public function update(Task $task)
             </form>
         </div>
     </td>
+=======
+   	<tbody>
+   		<tr style="{{ $task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : '' }}">
+		<!-- Complete task checkbox -->	
+       	<td>
+    			<form method="POST" action="/tasks/{{ $task->id }}" id="completeTask">
+    			@method('PATCH')
+    			@csrf
+    			@can('edit', $task)
+    				<input type="checkbox" class="form-check-input" name="completed" onChange="this.form.submit()" {{ $task->completed ? 'checked' : ''}}> 
+    			@endcan
+    				<label style="{{ $task->completed ? 'color:#38c172' : 'color:#E3342F'}}"><strong>{{ $task->completed ? 'Completed!' : 'To do' }}</strong></label>
+    			</form>
+    		</td>
+		<label></label>
+
+    		<!-- Editable task description with collapsable textarea -->
+    	  <td style="width:400px;"> 
+    			<a  data-toggle="collapse" href="#collapse-{{ $task->id }}" role="button" aria-expanded="false" aria-controls="collapseExample" style="width:100px;">{{ $task->description }}</a>
+    			<div class="collapse" id="collapse-{{ $task->id }}"> 
+    				<form method="POST" action="/tasks/{{ $task->id }}" style="margin-bottom: 0px!important;">
+    					@csrf
+    					@method('PATCH')	     
+    	       		<textarea  type="text" class="form-control" name="description" cols="8" rows="4">{{$task->description}}</textarea>
+    	          	<button class="btn btn-success mt-1 mb-0" type="button" id="button-addon2" onclick="this.form.submit()">Save</button>
+    				</form>
+    			</div>
+    		</td>
+>>>>>>> Stashed changes
 ```
 </details>
 
@@ -342,10 +385,10 @@ public function destroy(Project $project, Task $task)
 
 <!--Delete task -->
 <td>
-  <form  method="POST" action="/tasks/{{$task->id}}" style="margin-top: 0px!important;">
+  <form  method="POST" action="/tasks/{{ $task->id }}" style="margin-top: 0px!important;">
   @method('DELETE')
   @csrf
-  <button class="btn btn-danger btn-sm mt-0" onClick="this.form.submit()"> Delete task</button>
+  <button class="btn btn-danger btn-sm mt-0" onClick="this.form.submit()">Delete task</button>
   </form>
 </td>	
 ```
@@ -370,6 +413,7 @@ public function store(Task $task)
     // checks if enrty exists in pivot table (a user can only be assigned to a task once)
     // creates the entry if the record doesn't exist
     try{
+<<<<<<< Updated upstream
         $task->users()->attach($this->validateTask());
 
     } catch (QueryException $errors){
@@ -377,6 +421,17 @@ public function store(Task $task)
        return back()->withErrors('Duplicate entry.');
     }      
     return back();
+=======
+      
+      $task->users()->attach($this->validateTask());
+
+    } catch (QueryException $errors) {
+
+       return back()->withErrors('Duplicate entry.');
+    }  
+
+	return back();
+>>>>>>> Stashed changes
 }
 ```
 </details>
@@ -389,9 +444,9 @@ public function store(Task $task)
 <!-- assign -->
 @foreach($users as $assignedUser)
 @if(!$assignedUser->tasks->firstwhere('id',$task->id))
-  <form method="POST" action="/tasks/{{$task->id}}/assign" style="margin-bottom: 0px!important;">
+  <form method="POST" action="/tasks/{{ $task->id }}/assign" style="margin-bottom: 0px!important;">
   @csrf
-  <button class="btn btn-outline-secondary btn-sm mt-0 mb-0" onClick="this.form.submit()" style="width:100px;" type="link"><input type="hidden" name="assigned_to" value="{{$assignedUser->id}}">{{$assignedUser->name}}</button></li>
+  <button class="btn btn-outline-secondary btn-sm mt-0 mb-0" onClick="this.form.submit()" style="width:100px;" type="link"><input type="hidden" name="assigned_to" value="{{ $assignedUser->id }}">{{ $assignedUser->name }}</button></li>
   </form>
 @endif
 @endforeach		
@@ -408,8 +463,9 @@ public function store(Task $task)
 
 // unassigns the task 
 public function destroy(Task $task, User $user)
-{
-  	$task->users()->detach($user);
+{ 
+  $task->users()->detach($user);
+
 	return back();
 }
 ```
@@ -422,10 +478,10 @@ public function destroy(Task $task, User $user)
 
 @foreach ($task->users as $user)
 <!-- unassign -->
-  <form method="POST" action="/tasks/{{$task->id}}/assign/{{$user->id}}/delete" style="margin-bottom: 0px!important;">
+  <form method="POST" action="/tasks/{{ $task->id }}/assign/{{ $user->id }}/delete" style="margin-bottom: 0px!important;">
   @method('DELETE')
   @csrf
-  <button class="btn btn-outline-success btn-sm mt-0 mb-0" style="width:100px;" onClick="this.form.submit()">&#9989; {{$user->name}}</button>
+  <button class="btn btn-outline-success btn-sm mt-0 mb-0" style="width:100px;" onClick="this.form.submit()">&#9989; {{ $user->name }}</button>
   </form>
 @endforeach
 ```

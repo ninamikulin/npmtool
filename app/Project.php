@@ -13,8 +13,9 @@ class Project extends Model
 
 	// casts attribute to assigned data types
 	protected $casts = [
-		'created_at'  => 'datetime',
-		'deadline' => 'datetime'];
+		'created_at' => 'datetime',
+		'deadline' => 'datetime'
+        ];
 
 	// adds a task to the project
 	public function addTask($task)
@@ -37,6 +38,4 @@ class Project extends Model
     {
     	return $this->hasMany(Task::class);
     } 
-
-  
 }
