@@ -17,16 +17,8 @@
     - [Assign tasks to users](#assign-tasks-to-users)
     - [Unassign tasks from users](#unassign-tasks-from-users)
 5. [Migrations](#migrations) 
-5. [Eloquent relationships](#eloquent-relationships) 
-6. [Policies](#policies)
-    - [Unassign tasks to users](#unassign-tasks-to-users)
-5. [Migrations](#migrations)  
-6. [Creating and assigning tasks](#creating-and-assigning-tasks)  
-	i. [Models](#models)  
-    ii. 
-7. [Rich text editor](#rich-text-editor)
-8. [Middleware](#middleware)
-9. [Gates and Policies](#gates-and-policies)
+6. [Eloquent relationships](#eloquent-relationships) 
+7. [Policies](#policies)
    
 ## About 
 PMTool is a simple project management tool made with Laravel 6. 
@@ -38,6 +30,7 @@ PMTool is a simple project management tool made with Laravel 6.
    * The admin of the website can view, edit and delete all projects and tasks.  
    * Laravel's auth middleware is used for checking if the user is authenticated.  
    * A gate has been created and before method is used to define a callback that is run before all other authorization checks.
+
 ## Basic Laravel Auth
 Create basic Laravel auth: 
 - `composer require laravel/ui --dev`
@@ -444,7 +437,7 @@ public function store(Task $task)
 ```
 </details>
 
-#### Unassign tasks to users
+#### Unassign tasks from users
 
 <details> 
 <summary>Controller: UsersTasksController@destroy </summary> 
