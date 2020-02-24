@@ -13,12 +13,12 @@
     - [EDIT and UPDATE task](#edit-and-update-task)  
     - [DELETE task](#delete-task)  
     
-  ii. [Task assignment](#task-assignment) 
-    - [Assign tasks to users](#assign-tasks-to-users)
-    - [Unassign tasks from users](#unassign-tasks-from-users)
-5. [Migrations](#migrations) 
-6. [Eloquent relationships](#eloquent-relationships) 
-7. [Policies](#policies)
+  ii. [Task assignment](#task-assignment)   
+    - [Assign tasks to users](#assign-tasks-to-users)  
+    - [Unassign tasks from users](#unassign-tasks-from-users)  
+5. [Migrations](#migrations)   
+6. [Eloquent relationships](#eloquent-relationships)   
+7. [Policies](#policies)  
    
 ## About 
 PMTool is a simple project management tool made with Laravel 6. 
@@ -160,10 +160,10 @@ public function destroy(Project $project)
  $this->authorize('edit', $project);
  $project->delete();
 
-// displays flash message 
-session()->flash('message', 'Project deleted.');
+  // displays flash message 
+  session()->flash('message', 'Project deleted.');
 
-return redirect('/projects');
+  return redirect('/projects');
 }
 ```
 </details>
@@ -268,9 +268,9 @@ public function update(Task $task)
   
   // updates the task
   $task->update([
-  //checks if completed attribute in request (if task has been completed)
+  // checks if completed attribute in request (if task has been completed)
   'completed' => request()->has('completed'),
-  //setting the description attribute
+  // setting the description attribute
   'description' => $description
   ]);
 
@@ -601,7 +601,7 @@ public function projects()
 
 - `belongsToMany` Tasks - many to many 
 ```php
-//belongs to many Tasks
+// belongs to many Tasks
 public function tasks()
 {
   return $this->belongsToMany(Task::class)->withTimestamps();
@@ -713,8 +713,10 @@ class AuthServiceProvider extends ServiceProvider
   * @var array
   */
   protected $policies = [
-  'App\Project' => 'App\Policies\ProjectPolicy',
-  'App\Task' => 'App\Policies\TaskPolicy',
+
+    'App\Project' => 'App\Policies\ProjectPolicy',
+    'App\Task' => 'App\Policies\TaskPolicy',
+    
   ];
 
   /**
