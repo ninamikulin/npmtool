@@ -29,7 +29,7 @@ class UsersTasksController extends Controller
 
         } catch (QueryException $errors) {
 
-           return back()->withErrors('Duplicate entry.');
+            return back()->withErrors('Duplicate entry.');
         }      
         
     	return back();

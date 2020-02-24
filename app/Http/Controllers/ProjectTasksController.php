@@ -29,7 +29,7 @@ class ProjectTasksController extends Controller
         if (request()->description) {
             $attributes = $this->validateTask();
             $description = $attributes['description'];
-        }else{
+        } else {
             $description = $task->description;
         }
 

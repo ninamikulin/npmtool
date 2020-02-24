@@ -8,12 +8,12 @@
     iii. [UPDATE project](#update-project)   
     iv. [DELETE project](#delete-project) 
 4. [CRUD for Tasks](#crud-for-tasks)  
-	i. [Create, edit and complete tasks](#create-edit-and-complete-tasks)
+  i. [Create, edit and complete tasks](#create-edit-and-complete-tasks)
     - [CREATE task](#create-task)  
     - [EDIT and UPDATE task](#edit-and-update-task)  
     - [DELETE task](#delete-task)  
     
-	ii. [Task assignment](#task-assignment) 
+  ii. [Task assignment](#task-assignment) 
     - [Assign tasks to users](#assign-tasks-to-users)
     - [Unassign tasks from users](#unassign-tasks-from-users)
 5. [Migrations](#migrations) 
@@ -100,14 +100,13 @@ public function index()
 - shows details of one project with the associated tasks and all the users to enable task assignment   
 
 ```php
-/app/Http/Controllers/ProjectController.php
+// /app/Http/Controllers/ProjectController.php
 
 // shows one project
 public function show(Project $project)
 {
   return view('projects.show', ['project' => $project, 'users' => User::all()]);
 }
-
 ```
 </details>
 
@@ -143,7 +142,6 @@ public function update(Project $project)
   session()->flash('message', 'Your project has been updated.');
 
   return redirect("/projects/{$project->id}");
-
 }
 ```
 </details>
@@ -156,17 +154,16 @@ public function update(Project $project)
 ```php
 // /app/Http/Controllers/ProjectController.php
 
- // deletes from DB
- public function destroy(Project $project)
- {     
-   $this->authorize('edit', $project);
-   $project->delete();
+// deletes from DB
+public function destroy(Project $project)
+{     
+ $this->authorize('edit', $project);
+ $project->delete();
 
-  // displays flash message 
-  session()->flash('message', 'Project deleted.');
+// displays flash message 
+session()->flash('message', 'Project deleted.');
 
-  return redirect('/projects');
-
+return redirect('/projects');
 }
 ```
 </details>
@@ -218,8 +215,8 @@ public function store(Project $project, Task $task)
 
 // adds a task to the project
 public function addTask($task)
-{ 	
-    $this->tasks()->create($task);
+{   
+  $this->tasks()->create($task);
 }
 ```
 </details>
@@ -232,12 +229,12 @@ public function addTask($task)
 <!-- Create task -->
 <form method="POST" action="/projects/{{ $project->id }}/tasks">
 @csrf
-	<div class="form-group">
-		<input class="form-control" type="text" name="description" placeholder="Describe the task..." required>
-	</div>
-	<div class="row d-flex justify-content-center">
-		<button type="submit" class="btn btn-success mb-1">Add Task</button>
-	</div>
+  <div class="form-group">
+    <input class="form-control" type="text" name="description" placeholder="Describe the task..." required>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <button type="submit" class="btn btn-success mb-1">Add Task</button>
+  </div>
 </form>
 ```
 </details>
@@ -260,11 +257,13 @@ public function update(Task $task)
 
   // checks if the description has been changed, sets the updated attributes
   if (request()->description) {
-  	$attributes = $this->validateTask();
-  	$description = $attributes['description'];
+
+    $attributes = $this->validateTask();
+    $description = $attributes['description'];
 
   } else {
-  	$description =  $task->description;
+
+    $description =  $task->description;
   }
   
   // updates the task
@@ -287,59 +286,59 @@ public function update(Task $task)
 
 @foreach($project->tasks()->orderBy('completed', 'asc')->latest()->get() as $task)
 <tbody>
-<tr style="{{$task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : ''}}">
+<tr style="{{ $task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : '' }}">
     <!-- Complete task checkbox -->
     <td>
-        <form method="POST" action="/tasks/{{$task->id}}" id="completeTask">
+        <form method="POST" action="/tasks/{{ $task->id }}" id="completeTask">
         @method('PATCH')
         @csrf
         @can('edit', $task)
             <input type="checkbox" class="form-check-input" name="completed" onChange="this.form.submit()" {{ $task->completed ? 'checked' : ''}}> 
         @endcan
-            <label style="{{ $task->completed ? 'color:#38c172' : 'color:#E3342F'}}" ><strong>{{ $task->completed ? 'Completed!' : 'To do'}}</strong></label>
+            <label style="{{ $task->completed ? 'color:#38c172' : 'color:#E3342F' }}" ><strong>{{ $task->completed ? 'Completed!' : 'To do' }}</strong></label>
         </form>
     </td>
     <label></label>
 
     <!-- Editable task description with collapsable textarea -->
     <td style="width:400px;"> 
-        <a  data-toggle="collapse" href="#collapse-{{$task->id}}" role="button" aria-expanded="false" aria-controls="collapseExample" style="width:100px;">{{$task->description}}</a>
-        <div class="collapse" id="collapse-{{$task->id}}"> 
-            <form method="POST" action="/tasks/{{$task->id}}" style="margin-bottom: 0px!important;">
+        <a  data-toggle="collapse" href="#collapse-{{ $task->id }}" role="button" aria-expanded="false" aria-controls="collapseExample" style="width:100px;">{{ $task->description }}</a>
+        <div class="collapse" id="collapse-{{ $task->id }}"> 
+            <form method="POST" action="/tasks/{{ $task->id }}" style="margin-bottom: 0px!important;">
                 @csrf
-                @method('PATCH')	     
-                <textarea  type="text" class="form-control" name="description" cols="8" rows="4">{{$task->description}}</textarea>
+                @method('PATCH')       
+                <textarea  type="text" class="form-control" name="description" cols="8" rows="4">{{ $task->description }}</textarea>
                 <button class="btn btn-success mt-1 mb-0" type="button" id="button-addon2" onclick="this.form.submit()"> Save</button>
             </form>
         </div>
     </td>
-   	<tbody>
-   		<tr style="{{ $task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : '' }}">
-		<!-- Complete task checkbox -->	
-       	<td>
-    			<form method="POST" action="/tasks/{{ $task->id }}" id="completeTask">
-    			@method('PATCH')
-    			@csrf
-    			@can('edit', $task)
-    				<input type="checkbox" class="form-check-input" name="completed" onChange="this.form.submit()" {{ $task->completed ? 'checked' : ''}}> 
-    			@endcan
-    				<label style="{{ $task->completed ? 'color:#38c172' : 'color:#E3342F'}}"><strong>{{ $task->completed ? 'Completed!' : 'To do' }}</strong></label>
-    			</form>
-    		</td>
-		<label></label>
+    <tbody>
+      <tr style="{{ $task->completed ? 'background-color:rgb(56, 193, 114,0.2);' : '' }}">
+    <!-- Complete task checkbox --> 
+    <td>
+      <form method="POST" action="/tasks/{{ $task->id }}" id="completeTask">
+      @method('PATCH')
+      @csrf
+      @can('edit', $task)
+        <input type="checkbox" class="form-check-input" name="completed" onChange="this.form.submit()" {{ $task->completed ? 'checked' : ''}}> 
+      @endcan
+        <label style="{{ $task->completed ? 'color:#38c172' : 'color:#E3342F' }}"><strong>{{ $task->completed ? 'Completed!' : 'To do' }}</strong></label>
+      </form>
+    </td>
+    <label></label>
 
-    		<!-- Editable task description with collapsable textarea -->
-    	  <td style="width:400px;"> 
-    			<a  data-toggle="collapse" href="#collapse-{{ $task->id }}" role="button" aria-expanded="false" aria-controls="collapseExample" style="width:100px;">{{ $task->description }}</a>
-    			<div class="collapse" id="collapse-{{ $task->id }}"> 
-    				<form method="POST" action="/tasks/{{ $task->id }}" style="margin-bottom: 0px!important;">
-    					@csrf
-    					@method('PATCH')	     
-    	       		<textarea  type="text" class="form-control" name="description" cols="8" rows="4">{{$task->description}}</textarea>
-    	          	<button class="btn btn-success mt-1 mb-0" type="button" id="button-addon2" onclick="this.form.submit()">Save</button>
-    				</form>
-    			</div>
-    		</td>
+    <!-- Editable task description with collapsable textarea -->
+    <td style="width:400px;"> 
+      <a  data-toggle="collapse" href="#collapse-{{ $task->id }}" role="button" aria-expanded="false" aria-controls="collapseExample" style="width:100px;">{{ $task->description }}</a>
+      <div class="collapse" id="collapse-{{ $task->id }}"> 
+        <form method="POST" action="/tasks/{{ $task->id }}" style="margin-bottom: 0px!important;">
+          @csrf
+          @method('PATCH')       
+            <textarea  type="text" class="form-control" name="description" cols="8" rows="4">{{ $task->description }}</textarea>
+              <button class="btn btn-success mt-1 mb-0" type="button" id="button-addon2" onclick="this.form.submit()">Save</button>
+        </form>
+      </div>
+    </td>
 ```
 </details>
 
@@ -377,7 +376,7 @@ public function destroy(Project $project, Task $task)
   @csrf
   <button class="btn btn-danger btn-sm mt-0" onClick="this.form.submit()">Delete task</button>
   </form>
-</td>	
+</td> 
 ```
 </details>
 
@@ -399,23 +398,16 @@ public function store(Task $task)
 {
     // checks if enrty exists in pivot table (a user can only be assigned to a task once)
     // creates the entry if the record doesn't exist
-    try{
-        $task->users()->attach($this->validateTask());
+  try{
 
-    } catch (QueryException $errors){
+    $task->users()->attach($this->validateTask());
 
-       return back()->withErrors('Duplicate entry.');
-    }      
-    return back();
-      
-      $task->users()->attach($this->validateTask());
+  } catch (QueryException $errors) {
 
-    } catch (QueryException $errors) {
+    return back()->withErrors('Duplicate entry.');
+  } 
 
-       return back()->withErrors('Duplicate entry.');
-    }  
-
-	return back();
+  return back();
 }
 ```
 </details>
@@ -433,7 +425,7 @@ public function store(Task $task)
   <button class="btn btn-outline-secondary btn-sm mt-0 mb-0" onClick="this.form.submit()" style="width:100px;" type="link"><input type="hidden" name="assigned_to" value="{{ $assignedUser->id }}">{{ $assignedUser->name }}</button></li>
   </form>
 @endif
-@endforeach		
+@endforeach   
 ```
 </details>
 
@@ -450,7 +442,7 @@ public function destroy(Task $task, User $user)
 { 
   $task->users()->detach($user);
 
-	return back();
+  return back();
 }
 ```
 </details>
@@ -478,39 +470,39 @@ public function destroy(Task $task, User $user)
 ```php
 class CreateProjectsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->text('description');
-            $table->datetime('deadline');
-            $table->timestamps();
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('projects', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->unsignedBigInteger('user_id');
+      $table->string('name');
+      $table->text('description');
+      $table->datetime('deadline');
+      $table->timestamps();
 
-            // foreign key constraint - add user_id key to projects table
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-        });
-    }
+      // foreign key constraint - add user_id key to projects table
+      $table->foreign('user_id')
+          ->references('id')
+          ->on('users')
+          ->onDelete('cascade')
+          ->onUpdate('cascade');
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('projects');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('projects');
+  }
 }
 ```
 </details>
@@ -519,36 +511,36 @@ class CreateProjectsTable extends Migration
 ```php
 class CreateTasksTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('project_id');
-            $table->string('description');
-            $table->boolean('completed')->default(false);
-            $table->timestamps();
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('tasks', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->unsignedBigInteger('user_id');
+      $table->unsignedBigInteger('project_id');
+      $table->string('description');
+      $table->boolean('completed')->default(false);
+      $table->timestamps();
 
-            //foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade')->onUpdate('cascade');
-        });
-    }
+      //foreign key constraints
+      $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+      $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade')->onUpdate('cascade');
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('tasks');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('tasks');
+  }
 }
 ```
 </details>
@@ -557,38 +549,38 @@ class CreateTasksTable extends Migration
 ```php
 class CreateTaskUserTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('task_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('task_id');
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('task_user', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->unsignedBigInteger('user_id');
+      $table->unsignedBigInteger('task_id');
 
-            $table->timestamps();
+      $table->timestamps();
 
-            // a unique entry is a unique combination of the two identifiers - foreign keys
-            $table->unique(['user_id', 'task_id']);
+      // a unique entry is a unique combination of the two identifiers - foreign keys
+      $table->unique(['user_id', 'task_id']);
 
-            // foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-        });
-    }
+      // foreign key constraints
+      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('task_user');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('task_user');
+  }
 }
 ```
 </details>
@@ -602,7 +594,7 @@ class CreateTaskUserTable extends Migration
 // has many Projects 
 public function projects()
 {
-return $this->hasMany(Project::class);
+  return $this->hasMany(Project::class);
 }
 
 ```
@@ -612,7 +604,7 @@ return $this->hasMany(Project::class);
 //belongs to many Tasks
 public function tasks()
 {
-return $this->belongsToMany(Task::class)->withTimestamps();
+  return $this->belongsToMany(Task::class)->withTimestamps();
 }
 
 ```
@@ -624,10 +616,9 @@ public function isAdmin()
 {
   if ($this->id == 1)
   {
-  	return true;
+    return true;
   }
 }
-
 ``` 
 </details>
 <details><summary>Project</summary>
@@ -637,7 +628,7 @@ public function isAdmin()
 // belongs to one user
 public function user()
 {
-	return $this->belongsTo(User::class);
+  return $this->belongsTo(User::class);
 }
 ```
 
@@ -646,7 +637,7 @@ public function user()
 // has many tasks
 public function tasks()
 {
-return $this->hasMany(Task::class);
+  return $this->hasMany(Task::class);
 } 
 ```
 
@@ -659,7 +650,7 @@ return $this->hasMany(Task::class);
 // belongs to one project
 public function project()
 {
-	return $this->belongsTo(Project::class);
+  return $this->belongsTo(Project::class);
 }
 ```
 
@@ -670,7 +661,7 @@ public function project()
 // belongs to many users
 public function users()
 {
-	return $this->belongsToMany(User::class)->withTimestamps();
+  return $this->belongsToMany(User::class)->withTimestamps();
 }
 ```
 </details>
@@ -683,17 +674,17 @@ public function users()
 ```php
 class ProjectPolicy
 {
-    use HandlesAuthorization;
+  use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function edit(User $user, Project $project)
-    {
-        return $project->user_id === $user->id;
-    }
+  /**
+   * Create a new policy instance.
+   *
+   * @return void
+   */
+  public function edit(User $user, Project $project)
+  {
+    return $project->user_id === $user->id;
+  }
 }
 ```
 </details>
@@ -702,12 +693,12 @@ class ProjectPolicy
 ```php
 class TaskPolicy
 {
-    use HandlesAuthorization;
+  use HandlesAuthorization;
 
-    public function edit(User $user, Task $task)
-    {
-        return $task->user_id === $user->id;
-    }
+  public function edit(User $user, Task $task)
+  {
+    return $task->user_id === $user->id;
+  }
 }
 ```
 </details>
@@ -733,9 +724,9 @@ class AuthServiceProvider extends ServiceProvider
   */
   public function boot()
   {
-  	// register policies
+    // register policies
     $this->registerPolicies();
-	
+  
     // run the logic in the gate before all other auth checks
     Gate::before(function ($user, $ability) {
       
@@ -743,7 +734,6 @@ class AuthServiceProvider extends ServiceProvider
     });
   }
 }
-
 ```
 </details>
 
