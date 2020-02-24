@@ -11,11 +11,12 @@
   i. [Create, edit and complete tasks](#create-edit-and-complete-tasks)
     - [CREATE task](#create-task)  
     - [EDIT and UPDATE task](#edit-and-update-task)  
-    - [DELETE task](#delete-task)  
+    - [DELETE task](#delete-task) 
     
-  ii. [Task assignment](#task-assignment)   
-    - [Assign tasks to users](#assign-tasks-to-users)  
-    - [Unassign tasks from users](#unassign-tasks-from-users)  
+   ii. [Task assignment](#task-assignment)     
+    - [Assign tasks to users](#assign-tasks-to-users)   
+    - [Unassign tasks from users](#unassign-tasks-from-users)
+    
 5. [Migrations](#migrations)   
 6. [Eloquent relationships](#eloquent-relationships)   
 7. [Policies](#policies)  
